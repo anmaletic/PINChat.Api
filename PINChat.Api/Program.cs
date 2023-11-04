@@ -1,20 +1,74 @@
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PINChat.Api.Data;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.json", optional:true, reloadOnChange:true);
+builder.Configuration.AddJsonFile("appsettings.Development.json", optional:true, reloadOnChange:true);
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Services.AddCors(policy=>
+{
+    policy.AddPolicy("OpenCorsPolicy",opt=>opt
+        .WithOrigins(
+            "https://localhost:7154",
+            "https://pinchat.anmal.dev")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials());
+}); 
+
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("PINChatAuth") ?? throw new InvalidOperationException("Connection string 'PINChatAuth' not found.");
+var connectionString = builder.Configuration.GetConnectionString("PINChatAuth") ?? 
+                       throw new InvalidOperationException("Connection string 'PINChatAuth' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+
+
+
+
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = "JwtBearer";
+        options.DefaultChallengeScheme = "JwtBearer";
+    })
+    .AddJwtBearer("JwtBearer", jwtBearerOptions =>
+    {
+        jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Secrets:SecurityKey")!)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(5)
+        };
+    });
 
 var app = builder.Build();
+
+app.UseCors("OpenCorsPolicy");
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -35,6 +89,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
