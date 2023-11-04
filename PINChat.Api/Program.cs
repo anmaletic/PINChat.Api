@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PINChat.Api.Data;
-
-
+using PINChat.Api.Library;
+using PINChat.Api.Library.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,10 +38,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+//  Personal services
 
-
-
-
+builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+builder.Services.AddTransient<IUserData, UserData>();
 
 builder.Services.AddAuthentication(options =>
     {
