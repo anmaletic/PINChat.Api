@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PINChat.Api", "PINChat.Api\PINChat.Api.csproj", "{7509FEC2-849E-49AD-AA94-18A5B61D7E33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PINChat.Api.Library", "PINChat.Api.Library\PINChat.Api.Library.csproj", "{508D1D41-6DCE-4237-86B5-81A76B72F789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{210D8BCE-51D5-406F-B508-67F156746621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210D8BCE-51D5-406F-B508-67F156746621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210D8BCE-51D5-406F-B508-67F156746621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{508D1D41-6DCE-4237-86B5-81A76B72F789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{508D1D41-6DCE-4237-86B5-81A76B72F789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{508D1D41-6DCE-4237-86B5-81A76B72F789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{508D1D41-6DCE-4237-86B5-81A76B72F789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
