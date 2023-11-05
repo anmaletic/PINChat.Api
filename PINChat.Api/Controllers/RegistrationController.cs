@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PINChat.Api.Library.DataAccess;
+using PINChat.Api.Library.DataAccess.Interfaces;
 using PINChat.Api.Library.Models;
 
 namespace PINChat.Api.Controllers;
