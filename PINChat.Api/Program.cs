@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using PINChat.Api.Data;
 using PINChat.Api.Library;
 using PINChat.Api.Library.DataAccess;
+using PINChat.Api.Library.DataAccess.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IUserData, UserData>();
+builder.Services.AddTransient<IGroupData, GroupData>();
+builder.Services.AddTransient<IMessageData, MessageData>();
 
 builder.Services.AddAuthentication(options =>
     {
