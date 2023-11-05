@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PINChat.Api.Library.DataAccess;
+using PINChat.Api.Library.DataAccess.Interfaces;
 using PINChat.Api.Library.Models;
 
 namespace PINChat.Api.Controllers;
@@ -20,12 +20,12 @@ public class UserController : ControllerBase
 
     [HttpGet]
     public UserModel GetById()
-    {   
+    {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         return _userData.GetUserById(userId!);
     }
-    
+
     [HttpGet]
     [Route("GetAll")]
     public List<UserModel> GetAll()
@@ -46,21 +46,50 @@ public class UserController : ControllerBase
             };
             users.Add(user);
         }
-
-        // foreach (var item in userDB)                 todo: add interests
-        //     user.Interests.Add(new ModulModel
-        //     {
-        //         Sluzba = item.ModulSluzba,
-        //         Modul = item.ModulNaziv
-        //     });
-
+        
         return users;
     }
-    
+
     [HttpPost]
     [Route("Insert")]
     public void CreateNew(UserModel user)
     {
         _userData.CreateNewUser(user);
+    }
+            
+    [HttpPost]
+    [Route("Update")]
+    public void Update(UserModel user)
+    {
+        _userData.UpdateUser(user);
+    }
+
+    [HttpPost]
+    [Route("Contact/Insert")]
+    public void AddContact(UserContactModel contact)
+    {
+        _userData.AddContact(contact);
+    }
+
+    [HttpPost]
+    [Route("Contact/Delete")]
+    public void RemoveContact(UserContactModel contact)
+    {
+        _userData.RemoveContact(contact);
+    }
+    
+    
+    [HttpPost]
+    [Route("Group/Insert")]
+    public void AddGroup(UserGroupModel group)
+    {
+        _userData.AddGroup(group);
+    }
+
+    [HttpPost]
+    [Route("Group/Delete")]
+    public void RemoveGroup(UserGroupModel group)
+    {
+        _userData.RemoveGroup(group);
     }
 }

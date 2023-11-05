@@ -1,4 +1,5 @@
-﻿using PINChat.Api.Library.Models;
+﻿using PINChat.Api.Library.DataAccess.Interfaces;
+using PINChat.Api.Library.Models;
 
 namespace PINChat.Api.Library.DataAccess;
 
@@ -55,5 +56,38 @@ public class UserData : IUserData
     public void CreateNewUser(dynamic p)
     {
         _sql.SaveData("[PINChat].[spUsers_Insert]", p, "PINChatData");
+    }
+
+    public void UpdateUser(UserModel user)
+    {
+        var p = new
+        {
+            Id = user.Id,
+            DisplayName = user.DisplayName,
+            FirstName = user.FirstName,
+            LastName = user.LastName
+        };
+        
+        _sql.SaveData("[PINChat].[spUsers_Update]", p, "PINChatData");
+    }
+
+    public void AddContact(UserContactModel user)
+    {
+        _sql.SaveData("[PINChat].[spUserContacts_Insert]", user, "PINChatData");
+    }
+
+    public void RemoveContact(UserContactModel user)
+    {
+        _sql.SaveData("[PINChat].[spUserContacts_Delete]", user, "PINChatData");
+    }
+
+    public void AddGroup(UserGroupModel group)
+    {
+        _sql.SaveData("[PINChat].[spUserGroups_Insert]", group, "PINChatData");
+    }
+
+    public void RemoveGroup(UserGroupModel group)
+    {
+        _sql.SaveData("[PINChat].[spUserGroups_Delete]", group, "PINChatData");
     }
 }
