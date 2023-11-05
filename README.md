@@ -13,6 +13,7 @@
    - https://github.com/anmaletic/PINChat.App
 3. PINChat.Data
    - https://github.com/anmaletic/PINChat.Data
+   - https://dbdocs.io/antonio.maletic/PINChat?view=relationships
 
 ### Project board:
 - https://github.com/users/anmaletic/projects/6
