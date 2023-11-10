@@ -12,9 +12,17 @@ public class MessageData : IMessageData
         _sql = sql;
     }
 
-    public List<MessageModel> GetMessagesById(MessageQueryModel p)
+    public List<MessageModel> GetMessagesByUserId(MessageQueryModel p)
     {
-        var output = _sql.LoadData<MessageModel, dynamic>("[PINChat].[spMessages_GetById]", p, "PINChatData");
+        var output = _sql.LoadData<MessageModel, dynamic>("[PINChat].[spMessages_GetByUserId]", p, "PINChatData");
+
+        return output;
+    }
+    
+    public List<MessageModel> GetMessagesByGroupId(MessageQueryModel msg)
+    {
+        var p = new { msg.TargetId };
+        var output = _sql.LoadData<MessageModel, dynamic>("[PINChat].[spMessages_GetByGroupId]", p, "PINChatData");
 
         return output;
     }

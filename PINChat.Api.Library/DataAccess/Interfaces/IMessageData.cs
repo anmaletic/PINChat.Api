@@ -4,6 +4,7 @@ namespace PINChat.Api.Library.DataAccess.Interfaces;
 
 public interface IMessageData
 {
-    List<MessageModel> GetMessagesById(MessageQueryModel p);
+    List<MessageModel> GetMessagesByUserId(MessageQueryModel p);
+    List<MessageModel> GetMessagesByGroupId(MessageQueryModel p);
     void CreateNewMessage(MessageModel msg);
 }

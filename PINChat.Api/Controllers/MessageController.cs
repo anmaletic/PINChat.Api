@@ -18,9 +18,19 @@ public class MessageController : ControllerBase
     }
     
     [HttpPost]
-    public List<MessageModel> GetById(MessageQueryModel p)
+    [Route("GetByUser")]
+    public List<MessageModel> GetByUserId(MessageQueryModel msg)
     {
-        var messages = _messageData.GetMessagesById(p);
+        var messages = _messageData.GetMessagesByUserId(msg);
+
+        return messages;
+    }
+    
+    [HttpPost]
+    [Route("GetByGroup")]
+    public List<MessageModel> GetByGroupId(MessageQueryModel msg)
+    {
+        var messages = _messageData.GetMessagesByGroupId(msg);
 
         return messages;
     }
