@@ -18,6 +18,7 @@ builder.Services.AddCors(policy=>
     policy.AddPolicy("OpenCorsPolicy",opt=>opt
         .WithOrigins(
             "https://localhost:7154",
+            "https://chat.anmal.dev",
             "https://pinchat.anmal.dev")
         .AllowAnyHeader()
         .AllowAnyMethod()
