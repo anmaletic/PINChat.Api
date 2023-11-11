@@ -46,6 +46,7 @@ builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IUserData, UserData>();
 builder.Services.AddTransient<IGroupData, GroupData>();
 builder.Services.AddTransient<IMessageData, MessageData>();
+builder.Services.AddTransient<ISettingData, SettingData>();
 
 builder.Services.AddAuthentication(options =>
     {
