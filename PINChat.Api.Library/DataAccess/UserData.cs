@@ -22,10 +22,25 @@ public class UserData : IUserData
 
         var contactsDb = _sql.LoadDataInTransaction<UserModel, dynamic>("[PINChat].[spUserContacts_GetById]", p);
         
-        var groupsDb = _sql.LoadDataInTransaction<GroupModel, dynamic>("[PINChat].[spUserGroups_GetById]", p);
+        var groupsDb = _sql.LoadDataInTransaction<GroupDbModel, dynamic>("[PINChat].[spUserGroups_GetById]", p);
+
+        var groups = new List<GroupModel>();
+
+        foreach (var group in groupsDb)
+        {
+            var gp = new { Id = group.Id };
+                
+            var groupContacts = _sql.LoadDataInTransaction<UserModel, dynamic>("[PINChat].[spUserGroups_GetContactsById]", gp);
+            
+            groups.Add(new GroupModel()
+            {
+                Id = group.Id,
+                Name = group.Name,
+                Contacts = groupContacts
+            });
+        }
         
         _sql.CommitTransaction();
-        
         
         if (userDb is null) return null!;
         
@@ -36,9 +51,10 @@ public class UserData : IUserData
             FirstName = userDb.FirstName,
             LastName = userDb.LastName,
             LastLoginDate = userDb.LastLoginDate,
+            Avatar = userDb.Avatar,
             CreatedDate = userDb.CreatedDate,
             Contacts = contactsDb,
-            Groups = groupsDb
+            Groups = groups
         };
             
         return user;
@@ -65,7 +81,8 @@ public class UserData : IUserData
             Id = user.Id,
             DisplayName = user.DisplayName,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            Avatar = user.Avatar
         };
         
         _sql.SaveData("[PINChat].[spUsers_Update]", p, "PINChatData");
