@@ -16,8 +16,18 @@ public class GroupData : IGroupData
     {
         var p = new { };
 
-        var output = _sql.LoadData<GroupModel, dynamic>("[PINChat].[spGroups_GetAll]", p, "PINChatData");
+        _sql.StartTransaction("PINChatData");
+        
+        var output = _sql.LoadDataInTransaction<GroupModel, dynamic>("[PINChat].[spGroups_GetAll]", p);
+        
+        foreach (var group in output)
+        {
+            var gp = new { Id = group.Id };
+                
+            group.Contacts = _sql.LoadDataInTransaction<UserModel, dynamic>("[PINChat].[spUserGroups_GetContactsById]", gp);
+        }
 
+        _sql.CommitTransaction();
         return output;
     }
 }
