@@ -22,4 +22,10 @@ public class ImageController : ControllerBase
     {
         return File(_imageData.GetUserImage(userId), "image/png");
     }
+    
+    [HttpGet("GetGroupImage/{groupId}")]
+    public IActionResult GetGroupImage(string groupId)
+    {
+        return File(_imageData.GetGroupImage(groupId), "image/png");
+    }
 }
