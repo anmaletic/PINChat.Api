@@ -26,6 +26,14 @@ public class ImageController : ControllerBase
     [HttpGet("GetGroupImage/{groupId}")]
     public IActionResult GetGroupImage(string groupId)
     {
-        return File(_imageData.GetGroupImage(groupId), "image/png");
+        try
+        {
+           return File(_imageData.GetGroupImage(groupId), "image/png");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
