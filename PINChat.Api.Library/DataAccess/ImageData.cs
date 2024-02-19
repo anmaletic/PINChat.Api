@@ -28,7 +28,7 @@ public class ImageData : IImageData
         
         var groupDb = _sql.LoadData<GroupDbModel, dynamic>("[PINChat].[spGroups_GetById]", p, "PINChatData").FirstOrDefault();
 
-        byte[] avatar = GenerateImageFromInitials(groupDb!.Name);
+        var avatar = GenerateImageFromInitials($"{groupDb!.Name![0]}");
         
         return avatar;
     }
