@@ -30,4 +30,21 @@ public class GroupData : IGroupData
         _sql.CommitTransaction();
         return output;
     }
+    
+    public void Create(dynamic p)
+    {
+        _sql.SaveData("[PINChat].[spGroups_Insert]", p, "PINChatData");
+    }
+    
+    public void Update(GroupDbModel group)
+    {
+        var p = new
+        {
+            Id = group.Id,
+            Name = group.Name,
+            Avatar = group.Avatar
+        };
+        
+        _sql.SaveData("[PINChat].[spGroups_Update]", p, "PINChatData");
+    }
 }

@@ -8,6 +8,7 @@ namespace PINChat.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
+
 public class GroupController : ControllerBase
 {
     private IGroupData _groupData;
@@ -24,5 +25,19 @@ public class GroupController : ControllerBase
         var groups = _groupData.GetAllGroups();
 
         return groups;
+    }
+    
+    [HttpPost]
+    [Route("Insert")]
+    public void Insert(GroupDbModel group)
+    {
+        _groupData.Create(group);
+    }
+    
+    [HttpPost]
+    [Route("Update")]
+    public void Update(GroupDbModel group)
+    {
+        _groupData.Update(group);
     }
 }
