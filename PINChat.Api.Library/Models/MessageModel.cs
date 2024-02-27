@@ -8,4 +8,6 @@ public class MessageModel
     public string? SourceId { get; set; }
     public string? Content { get; set; }
     public string? Image { get; set; }
+    
+    public string? AvatarPath { get; set; }
 }
