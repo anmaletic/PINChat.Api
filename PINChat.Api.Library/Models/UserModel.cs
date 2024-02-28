@@ -8,6 +8,7 @@ public class UserModel
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public byte[]? Avatar { get; set; }
+    public string? AvatarPath { get; set; }
     public List<UserModel>? Contacts { get; set; } = new();
     public List<GroupModel>? Groups { get; set; } = new();
     public DateTime LastLoginDate { get; set; }

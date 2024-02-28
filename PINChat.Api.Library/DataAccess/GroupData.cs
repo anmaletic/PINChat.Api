@@ -42,7 +42,8 @@ public class GroupData : IGroupData
         {
             Id = group.Id,
             Name = group.Name,
-            Avatar = group.Avatar
+            Avatar = group.Avatar,
+            AvatarPath = group.AvatarPath
         };
         
         _sql.SaveData("[PINChat].[spGroups_Update]", p, "PINChatData");

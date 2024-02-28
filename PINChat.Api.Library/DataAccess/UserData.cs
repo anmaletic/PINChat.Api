@@ -36,6 +36,8 @@ public class UserData : IUserData
             {
                 Id = group.Id,
                 Name = group.Name,
+                Avatar = group.Avatar,
+                AvatarPath = group.AvatarPath,
                 Contacts = groupContacts
             });
         }
@@ -52,6 +54,7 @@ public class UserData : IUserData
             LastName = userDb.LastName,
             LastLoginDate = userDb.LastLoginDate,
             Avatar = userDb.Avatar,
+            AvatarPath = userDb.AvatarPath,
             CreatedDate = userDb.CreatedDate,
             Contacts = contactsDb,
             Groups = groups
@@ -82,7 +85,8 @@ public class UserData : IUserData
             DisplayName = user.DisplayName,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Avatar = user.Avatar
+            Avatar = user.Avatar,
+            AvatarPath = user.AvatarPath
         };
         
         _sql.SaveData("[PINChat].[spUsers_Update]", p, "PINChatData");
