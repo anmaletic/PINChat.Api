@@ -43,6 +43,7 @@ public class UserController : ControllerBase
                 LastName = userDb.LastName,
                 LastLoginDate = userDb.LastLoginDate,
                 Avatar = userDb.Avatar,
+                AvatarPath = userDb.AvatarPath,
                 CreatedDate = userDb.CreatedDate
             };
             users.Add(user);
