@@ -17,7 +17,7 @@ public class ImageController : ControllerBase
         _imageData = imageData;
     }
 
-    [HttpGet("GetImage/{userId}")]
+    [HttpGet("GetUserImage/{userId}")]
     public IActionResult Get(string userId)
     {
         return File(_imageData.GetUserImage(userId), "image/png");
