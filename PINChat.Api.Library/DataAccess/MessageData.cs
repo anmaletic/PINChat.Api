@@ -34,8 +34,7 @@ public class MessageData : IMessageData
             SourceId = msg.SourceId,
             TargetId = msg.TargetId,
             Content = msg.Content,
-            Image = msg.Image,
-            AvatarPath = msg.AvatarPath
+            Image = msg.Image
         };
             
         _sql.SaveData("[PINChat].[spMessages_Insert]", p, "PINChatData");
