@@ -6,6 +6,7 @@ using PINChat.Api.Data;
 using PINChat.Api.Library;
 using PINChat.Api.Library.DataAccess;
 using PINChat.Api.Library.DataAccess.Interfaces;
+using PINChat.Api.Library.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services.AddSwaggerGen();
 
 
 //  Personal services
+
+builder.Services.AddTransient<IEncryptionService, EncryptionService>();
 
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IUserData, UserData>();
