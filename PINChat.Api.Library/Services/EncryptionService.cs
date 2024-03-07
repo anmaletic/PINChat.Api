@@ -9,7 +9,7 @@ public class EncryptionService : IEncryptionService
     
     public EncryptionService(IConfiguration config)
     {
-        _key = Convert.FromBase64String(config["EncryptionKey"]!);
+        _key = Convert.FromBase64String(config["Secrets:EncryptionKey"]!);
     }
     
     public string Encrypt(string plainText)
