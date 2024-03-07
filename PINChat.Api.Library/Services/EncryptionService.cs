@@ -26,13 +26,15 @@ public class EncryptionService : IEncryptionService
         using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
         using var swEncrypt = new StreamWriter(csEncrypt);
         swEncrypt.Write(plainText);
-    
+        swEncrypt.Flush();
+        csEncrypt.FlushFinalBlock();
+        
         // Combine IV and ciphertext into a single byte array
         var encryptedBytes = iv.Concat(msEncrypt.ToArray()).ToArray();
 
         // Encode the combined byte array as Base64
         return Convert.ToBase64String(encryptedBytes);
-    }
+        }
     
     public string Decrypt(string cipherText)
     {
@@ -41,7 +43,7 @@ public class EncryptionService : IEncryptionService
 
         // Extract the IV from the first 16 bytes of the encrypted data
         var iv = encryptedBytes.Take(16).ToArray();
-        
+    
         using var aesAlg = Aes.Create();
         aesAlg.Key = _key;
         aesAlg.IV = iv;
