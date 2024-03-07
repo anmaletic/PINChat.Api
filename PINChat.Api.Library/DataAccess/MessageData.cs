@@ -31,6 +31,11 @@ public class MessageData : IMessageData
         var p = new { msg.TargetId };
         var output = _sql.LoadData<MessageModel, dynamic>("[PINChat].[spMessages_GetByGroupId]", p, "PINChatData");
 
+        foreach (var m in output)
+        {
+            m.Content = _encryptionService.Decrypt(m.Content!);
+        }
+
         return output;
     }
 
