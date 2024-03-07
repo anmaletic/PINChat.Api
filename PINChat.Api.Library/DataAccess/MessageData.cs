@@ -1,21 +1,28 @@
 ﻿using PINChat.Api.Library.DataAccess.Interfaces;
 using PINChat.Api.Library.Models;
+using PINChat.Api.Library.Services;
 
 namespace PINChat.Api.Library.DataAccess;
 
 public class MessageData : IMessageData
 {
     private readonly ISqlDataAccess _sql;
+    private readonly IEncryptionService _encryptionService;
 
-    public MessageData(ISqlDataAccess sql)
+    public MessageData(ISqlDataAccess sql, IEncryptionService encryptionService)
     {
         _sql = sql;
+        _encryptionService = encryptionService;
     }
 
     public List<MessageModel> GetMessagesByUserId(MessageQueryModel p)
     {
         var output = _sql.LoadData<MessageModel, dynamic>("[PINChat].[spMessages_GetByUserId]", p, "PINChatData");
 
+        foreach (var msg in output)
+        {
+            msg.Content = _encryptionService.Decrypt(msg.Content!);
+        }
         return output;
     }
     
@@ -33,7 +40,7 @@ public class MessageData : IMessageData
         {
             SourceId = msg.SourceId,
             TargetId = msg.TargetId,
-            Content = msg.Content,
+            Content = _encryptionService.Encrypt(msg.Content!),
             Image = msg.Image
         };
             
